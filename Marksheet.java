@@ -3,39 +3,66 @@ import java.util.Scanner;
 public class Marksheet {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		 Scanner scanner= new Scanner(System.in);
-	        System.out.print("enter student number:");
-	        int empNo=scanner.nextInt();
-	        System.out.print("enter your name:");
-	        String studentName=scanner.next();
-	        System.out.print("enter your marks for sub 1 :");
-	        int sub1=scanner.nextInt();
+		 // TODO Auto-generated method stub
+        Scanner scanner = new Scanner(System.in);
 
-	        System.out.print("enter your marks for sub 2:");
-	        int sub2=scanner.nextInt();
-	        System.out.print("enter your marks for sub 3 :");
-	        int sub3=scanner.nextInt();
-	        System.out.print("enter your marks for sub 4:");
-	        int sub4=scanner.nextInt();
-	        System.out.print("enter your marks for sub 5:");
-	        int sub5=scanner.nextInt();
+        System.out.println("Enter the number of students: ");
+        int numStudents = scanner.nextInt();
 
-	        int total=sub1+sub2+sub3+sub4+sub5;
+        int[][] studentMarks = new int[numStudents][5];
 
+        String[] studentNames = new String[numStudents];
 
+        int[] studentSerialNumbers = new int[numStudents];
 
+        for (int i = 0; i < numStudents; i++) {
+            System.out.println("Enter the student serial number: ");
+            studentSerialNumbers[i] = scanner.nextInt();
 
+            System.out.println("Enter the student name: ");
+            studentNames[i] = scanner.next();
 
-	        System.out.println("\t \t \t\twelcome to student marks list application");
+            for (int j = 0; j < 5; j++) {
+                System.out.println("Enter the marks for subject " + (j + 1) + ": ");
+                studentMarks[i][j] = scanner.nextInt();
+            }
+        }
 
-	        System.out.print("sn.NO :\t\tSTUDENT NAME:\t\tSUB1:\t\tSUB2:\t\tSUB3:\t\tSUB4:\t\tSUB5:\t\tTOTAL : ");
-	        System.out.println();
-	        System.out.print("\t"+empNo+"\t\t\t"+studentName+"\t\t\t"+sub1+"\t\t\t"+sub2+"\t\t\t"+sub3 +"\t\t\t"+sub4+"\t\t\t"+sub5+"\t\t\t"+total +" ");
-	        System.out.println();
+        int[] studentTotals = new int[numStudents];
+        for (int i = 0; i < numStudents; i++) {
+            studentTotals[i] = 0;
+            for (int j = 0; j < 5; j++) {
+                studentTotals[i] += studentMarks[i][j];
+            }
+        }
 
-	        System.out.println("--------------------------------------------------------------------------------------------------------------");
-	        scanner.close();
+        double[] studentAverages = new double[numStudents];
+        for (int i = 0; i < numStudents; i++) {
+            studentAverages[i] = (double) studentTotals[i] / 5;
+        }
+
+        double[] unitAverages = new double[5];
+        for (int i = 0; i < 5; i++) {
+            unitAverages[i] = 0.0;
+            for (int j = 0; j < numStudents; j++) {
+                unitAverages[i] += studentMarks[j][i];
+            }
+            unitAverages[i] /= numStudents;
+        }
+
+        System.out.println("Welcome to Student Marklist Application");
+        System.out.println("________________________________________________________________________________");
+        System.out.println("SNo\tStudent Name\tSub1\tSub2\tSub3\tSub4\tSub5\tTotal\tAverage");
+        System.out.println("________________________________________________________________________________");
+        for (int i = 0; i < numStudents; i++) {
+            System.out.println((i + 1) + "\t"  + studentNames[i] + "    \t" + studentMarks[i][0] + "\t" + studentMarks[i][1] + "\t" + studentMarks[i][2] + "\t" + studentMarks[i][3] + "\t" + studentMarks[i][4] + "\t" + studentTotals[i] + "\t" + studentAverages[i]);
+        }
+        System.out.println("________________________________________________________________________________");
+
+        // Print the average marks for each unit at the bottom of each unit
+        System.out.print("Average marks per unit");
+        for (int i = 0; i < 5; i++) {
+            System.out.print("\t" +String.format("%.2f", unitAverages[i]));
 	}
 
-}
+}}
